@@ -1,10 +1,13 @@
 
+var objTypeCounter = 0;
+
+
 function spriteData(x, y, frames, sprite){
   this.hspd = 0;
   this.vspd = 0;
   this.vacc = 0.1;
 
-  this.vspdMax = 8;
+  this.vspdMax = 4;
   this.x = x;
   this.y = y;
   this.angle = 0;
@@ -23,7 +26,7 @@ function spriteData(x, y, frames, sprite){
     this.y += this.vspd;
 
 
-    this.angle = Math.sin(this.frames/30)*Math.PI/4;
+    this.angle = Math.sin(this.frames/50)*Math.PI/4;
 
 
     this.frames++;
@@ -39,14 +42,18 @@ function spriteData(x, y, frames, sprite){
   }
 
   this.reset = function(){
-    this.x = Math.random() * window.innerWidth;
+    //this.x = Math.random() * window.innerWidth;
     this.y = -400 -Math.random() *1500;
     this.frames = Math.random()*300;
     this.vspd = 0;
     this.hspd = 0;
 
 
-    const randomImage = spriteImages[Math.floor(Math.random() * spriteImages.length)];
+    const randomImage = spriteImages[objTypeCounter];
+	objTypeCounter++;
+if(objTypeCounter >= spriteImages.length){	
+	objTypeCounter = 0;
+}
     this.sprite = randomImage;
   }
 }
@@ -55,7 +62,15 @@ function spriteData(x, y, frames, sprite){
 var objList = [];
 document.addEventListener("DOMContentLoaded", function() {
   for(var i = 0; i  < 10; i++){
-    var spr = new spriteData(Math.random() * window.innerWidth, 0, Math.random()*300, spriteImages[Math.floor(spriteImages.length*Math.random())]);
+const randomImage = spriteImages[objTypeCounter];
+	objTypeCounter++;
+if(objTypeCounter >= spriteImages.length){	
+	objTypeCounter = 0;
+}
+	var xx = (window.innerWidth/10)*(i+0.5);
+	 var yy = -1500*Math.random();
+
+    var spr = new spriteData(xx, yy, Math.random()*300, randomImage);
     objList.push(spr);
   }
 });

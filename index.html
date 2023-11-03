@@ -21,7 +21,10 @@
             text-align: center;
             margin-top: 20px;
         }
-
+        h3 {
+            font-size: 24px;
+            text-align: center;
+        }
         .enigma-box {
             margin: 20px auto;
             padding: 20px;
@@ -38,6 +41,10 @@
         }
 
         input[type="password"] {
+            padding: 10px;
+        }
+
+        input[type="text"] {
             padding: 10px;
         }
 
@@ -76,6 +83,7 @@
 </body>
 
   <div class="enigma-box">
+      <h3>Spooky Enigma</h3>
       <label for="enigma">Selecione o Enigma:</label>
       <select id="enigma" onclick = "changeQuestion()">
           <option value="Enigma 1">Enigma 1</option>
@@ -90,15 +98,30 @@
       </select>
       <h3 id = "pergunta" >Qual é o segundo tipo da carta cujo nome possui um número?</h1>
       <label for="password">Enter Password:</label>
-      <input type="password" id="password" name="password">
+      <input type="text" id="password" name="password">
       <button onclick="checkPasswords()">Submit</button>
       <div id="output"></div>
+      <div id="e1"></div>
+      <div id="e2"></div>
+      <div id="e3"></div>
+      <div id="e4"></div>
+      <div id="e5"></div>
+      <div id="e6"></div>
+      <div id="e7"></div>
+      <div id="e8"></div>
+      <div id="e9"></div>
   </div>
 
   <canvas id="Canvas" width="1280" height="720"></canvas>
   <script src = "dataLoader.js"></script>
   <script src = "script.js"></script>
   <script>
+
+    var enigmaDone =[
+      false,false,false,
+      false,false,false,
+      false,false,false
+    ]
 
     function changeQuestion() {
         var questions = {
@@ -147,9 +170,15 @@
           var enigma = document.getElementById("enigma").value;
           var password = document.getElementById("password").value;
           var outputDiv = document.getElementById("output");
+          let result = enigma.substring(enigma.length - 1);
 
-          if (passwords[enigma] && passwords[enigma] === password) {
+          if (passwords[enigma] && passwords[enigma].toLowerCase() === password.toLowerCase()) {
               outputDiv.textContent = enigma + ": Correto, a pista é ("+ pieces[enigma] + ")";
+              if(!enigmaDone[result]){
+                enigmaDone[result] = true;
+                document.getElementById("e" + result).textContent = pieces[enigma];
+
+              }
           } else {
               outputDiv.textContent = enigma + ": Resposta incorreta";
           }
