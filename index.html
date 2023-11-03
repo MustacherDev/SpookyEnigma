@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Spooky Enigma</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .enigma-box {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #fff;
+            width: 80%;
+            max-width: 450px;
+            background-color: #333;
+        }
+
+        label, input, button {
+            display: block;
+            margin: 10px 0px;
+            width: 90%;
+        }
+
+        input[type="password"] {
+            padding: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        canvas{
+          position:absolute;
+          left:0;
+          top:0;
+          z-index:-1;
+        }
+    </style>
+
+
+
+</head>
+
+
+<body>
+</body>
+
+  <div class="enigma-box">
+      <label for="enigma">Selecione o Enigma:</label>
+      <select id="enigma" onclick = "changeQuestion()">
+          <option value="Enigma 1">Enigma 1</option>
+          <option value="Enigma 2">Enigma 2</option>
+          <option value="Enigma 3">Enigma 3</option>
+          <option value="Enigma 4">Enigma 4</option>
+          <option value="Enigma 5">Enigma 5</option>
+          <option value="Enigma 6">Enigma 6</option>
+          <option value="Enigma 7">Enigma 7</option>
+          <option value="Enigma 8">Enigma 8</option>
+          <option value="Enigma 9">Enigma 9</option>
+      </select>
+      <h3 id = "pergunta" >Qual é o segundo tipo da carta cujo nome possui um número?</h1>
+      <label for="password">Enter Password:</label>
+      <input type="password" id="password" name="password">
+      <button onclick="checkPasswords()">Submit</button>
+      <div id="output"></div>
+  </div>
+
+  <canvas id="Canvas" width="1280" height="720"></canvas>
+  <script src = "dataLoader.js"></script>
+  <script src = "script.js"></script>
+  <script>
+
+    function changeQuestion() {
+        var questions = {
+            "Enigma 1": "Qual é o segundo tipo da carta cujo nome possui um número?",
+            "Enigma 2": "Qual é o tipo de macarrão preferido do Gustavo?",
+            "Enigma 3": "Qual é a cor da criatura da carta com duas estrelas?",
+            "Enigma 4": "Qual é o nome do elemento que se repete nas cartas?",
+            "Enigma 5": "O que o Freddy está segurando? (Segundo nome)",
+            "Enigma 6": "O que diz o código na carta mais misteriosa?",
+            "Enigma 7": "Qual é o número relacionado à carta de maior nome? (Número por extenso)",
+            "Enigma 8": "Sábio",
+            "Enigma 9": "O ano de alguma carta está errado, escreva a discrepância"
+        };
+
+        var enigma = document.getElementById("enigma").value;
+        var pergunta = document.getElementById("pergunta");
+        pergunta.textContent = questions[enigma];
+    }
+
+      function checkPasswords() {
+          var passwords = {
+              "Enigma 1": "Cientista",
+              "Enigma 2": "Tortellini",
+              "Enigma 3": "Verde",
+              "Enigma 4": "Terra",
+              "Enigma 5": "Kitty",
+              "Enigma 6": "Luz",
+              "Enigma 7": "Oito",
+              "Enigma 8": "Talvez",
+              "Enigma 9": "Boo"
+          };
+
+          var pieces = {
+              "Enigma 1": "D",
+              "Enigma 2": "R",
+              "Enigma 3": "AH",
+              "Enigma 4": "CIR",
+              "Enigma 5": "RE",
+              "Enigma 6": "Junte todas as outras pistas, a resposta final estará invertida",
+              "Enigma 7": "BB",
+              "Enigma 8": "EW",
+              "Enigma 9": "As pistas formam uma chave"
+          };
+
+
+          var enigma = document.getElementById("enigma").value;
+          var password = document.getElementById("password").value;
+          var outputDiv = document.getElementById("output");
+
+          if (passwords[enigma] && passwords[enigma] === password) {
+              outputDiv.textContent = enigma + ": Correto, a pista é ("+ pieces[enigma] + ")";
+          } else {
+              outputDiv.textContent = enigma + ": Resposta incorreta";
+          }
+
+          // Clear the password input field
+          document.getElementById("password").value = "";
+      }
+  </script>
+
+</html>
